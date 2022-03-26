@@ -1,11 +1,11 @@
-name: create terraftom module
-description: used to create a terrafrom module in an organization
+name: delete terraftom module
+description: used to delete a terrafrom module in an organization
 inputs:
   token:
-    description: terraform user token user
+    description: terraform user token
     required: true
   module_name:
-    description: the name of the terraform module to be created create
+    description: the name of the terraform module to be deleted 
     required: true
   provider:
     description: the module provider | aws
@@ -14,7 +14,7 @@ inputs:
     description: private | public registry
     required: true
   organization:
-    description: the terrafrom cloud organization to have the module created in
+    description: the terrafrom cloud module organization 
     required: true
 outputs:
   response:
