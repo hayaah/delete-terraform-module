@@ -36,14 +36,16 @@ const deleteModuleApiCall = (callback) => {
     'Content-Type': 'application/vnd.api+json',
     'Authorization': `Bearer ${getToken()}`
   }
-
-  var options = {
-    'method': 'POST',
+ 
+  const options = {
+    'method': 'DELETE',
     'url': `https://app.terraform.io/api/v2/organizations/${organization}/registry-modules/${registryName}/${organization}/${moduleName}/${provider}`,
     'headers': headers
   };
 
   request(options, (errors, response) => {
+   // console.log(response.body)
+    console.log(response.statusCode)
     if (response && response.statusCode == 204) {
       return callback({  status: 204, data: "module was deleted"  });
     } 
@@ -67,8 +69,26 @@ exports.modules = {
 const core = __nccwpck_require__(2186);
 const deleteModule = __nccwpck_require__(5609)
  
+
+const setGithubInput = (name, value) =>
+  process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] = value;
+
 async function run() {
+  setGithubInput("module_name", "test_ran-gadi-haya-test")
+  setGithubInput("provider", "aws")
+
+  setGithubInput("registry_name", "private")
+
+
+  setGithubInput("organization", "wix-infragod")
+
+
+  setGithubInput("token", "VyOw6GuKtEDbAg.atlasv1.ql07LNyomIHzOZuYPRuRuZea3ZZktKPNssHkvy2KLllsSnb789DxjyzvFMarlGQjCWw")
+
+
+
   deleteModule.modules.deleteModuleApiCall((deleteModuleResponse) => {
+    console.log(deleteModuleResponse)
     if (deleteModuleResponse.data) {
       return core.setOutput("response", JSON.stringify(deleteModuleResponse.data));
     } 
